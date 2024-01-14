@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Who Wants to Be a Millionaire</title>
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            height: 100%;
+        }
+
+        .container {
+            height: 100%;
+            width: 100%;
+            border: 2px solid black;
+            background-image: url(background.jpeg.jpg);
+            background-size: cover;
+    
+        }
+
+        header {
+            padding: 50px;
+            color: white;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        main {
+            padding: 20px;
+            color: azure;
+            font-size: 20px;
+            
+        }
+
+        img {
+            text-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            height: 235px;
+        }
+
+        button {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+
+        button:hover {
+            background-color: #00587a;
+        }
+
+        input{
+            margin-bottom: 15px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            Who Wants to Be a Millionaire
+        </header>
+
+        <img
+            src="logo-removebg-preview.png">
+            <main>
+                <h2>Welcome to the Game!</h2>
+                <p>Test your knowledge and win a million!</p>
+    
+                <label for="playerName">Username:</label>
+                <input type="text" id="username" placeholder="User Name" required>
+                <br>
+                <label for="playerName">Password:</label>
+                <input type="text" id="password" placeholder="Your Password" required>
+                <br>
+                <button onclick="validateLogin()">Login</button>
+            </main>
+</div>
+    <script>
+        function validateLogin() {
+          var username = document.getElementById("username").value;
+          var password = document.getElementById("password").value;
+          
+          if(username == "baldi" && password == "123") {
+            window.location.href = "home.html";
+          } else {
+            alert("Login gagal silakan masukan unsername dan pasword yang benar!");
+            return false;
+          }
+        }
+      </script>
+    </body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #222;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url(bg_wwtbam.jpg) no-repeat center fixed;
+            background-size: cover;
+        }
+
+        .exit {
+            position: absolute;
+            top: 50px;
+            right: 100px;
+            text-align: center;  
+        }
+
+        .exit a {
+            background-color: black;
+            color: white; 
+            padding: 15px 12px;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: 2px 3px 12px rgba(0,0,0,.2);
+            transition: .2s;
+        }
+
+        .exit:hover {
+            transform: translateY(-2px); 
+        }
+
+        .kontainer {
+            width: 50%;
+            background-color: rgb(43, 18, 139);
+            border: 2px solid rgb(43, 18, 139);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .header {
+            background-color: #444;
+            padding: 20px;
+            text-align: left;
+        }
+
+        h1 {
+            margin: 0;
+            color: #fff;
+        }
+
+        .pertanyaan-container {
+            padding: 20px;
+        }
+
+        .pertanyaan {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .opsi {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        button {
+            background-color: rgb(98, 92, 252);
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: aquamarine;
+        }
+
+        .notifikasi {
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .hasil {
+            margin-top: 20px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .reset {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #333;
+            padding: 10px 20px;
+            border: 2px solid #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reset:hover {
+            background-color: #555;
+        }
+    </style>
+    <title>Who Wants To Be A Millionaire</title>
+</head>
+<body>
+    <div class="exit">
+        <a href="home.html">ESC</a >
+    </div>
+    <div class="kontainer">
+        <div class="header">
+            <h1>Who Wants To Be A Millionaire</h1>
+        </div>
+        <div class="pertanyaan-container">
+            <div class="pertanyaan" id="pertanyaan"></div>
+            <div class="opsi" id="opsi"></div>
+            <div class="notifikasi" id="notifikasi"></div>
+            <div class="hasil" id="hasil"></div>
+            <button onclick="submitJawaban()">Submit Jawaban</button>
+            <div class="reset" id="reset" onclick="resetGame()">Reset Game</div>
+        </div>
+    </div>
+
+    <audio autoplay loop>
+        <source src="suspense.mp3" type="audio/mpeg">
+        </audio>
+
+    <script>
+        const pertanyaan = [
+            {
+                pertanyaan: "Apa ibukota Perancis?",
+                pilihan: ["Paris", "London", "Berlin", "Roma"],
+                jawabanBenar: "Paris",
+                hadiah: "Rp.100.000"
+            },
+            {
+                pertanyaan: "Planet apa yang disebut Planet Merah?",
+                pilihan: ["Venus", "Mars", "Jupiter", "Merkurius"],
+                jawabanBenar: "Mars",
+                hadiah: "Rp.250.000"
+            },
+            {
+                pertanyaan: "Senjata khas suku aborigin adalah?",
+                pilihan: ["Tombak", "Panah", "Pedang", "Boomerang"],
+                jawabanBenar: "Boomerang",
+                hadiah: "Rp.500.000"
+            },
+            {
+                pertanyaan: "Yang bukan termasuk pahlawan revolusi adalah?",
+                pilihan: ["A. H. Nasution", "Jenderal Ahmad Yani", "Pierre Tandean", "Letjen S. Parman"],
+                jawabanBenar: "A. H. Nasution",
+                hadiah: "Rp.750.000"
+            },
+            {
+                pertanyaan: "Alat optic yang digunakan pada kapal selam adalah?",
+                pilihan: ["Stetoskop", "Periskop", "Teleskop", "Horoskop"],
+                jawabanBenar: "Periskop",
+                hadiah: "Rp.1.000.000"
+            },
+            {
+                pertanyaan: "Mata uang negara Fillipina adalah?",
+                pilihan: ["Peseta", "Euro", "Dolar", "Peso"],
+                jawabanBenar: "Peso",
+                hadiah: "Rp.2.000.000"
+            },
+            {
+                pertanyaan: "Siapa penemu bola lampu pertama kali?",
+                pilihan: ["Thomas Alva Edison", "Albert Einstein", "Alexander Graham Bell", "Nikola Tesla"],
+                jawabanBenar: "Thomas Alva Edison",
+                hadiah: "Rp.4.000.000"
+            },
+            {
+                pertanyaan: "Istilah untuk menyebut orang buta adalah?",
+                pilihan: ["Tuna Rungu", "Tuna Wisma", "Tuna Fish", "Tuna Netra"],
+                jawabanBenar: "Tuna Netra",
+                hadiah: "Rp.8.000.000"
+            },
+            {
+                pertanyaan: "Dari provinsi mana suku bugis berasal?",
+                pilihan: ["Jawa Tengah", "Jakarta Selatan", "Sulawesi Selatan", "Bengkulu"],
+                jawabanBenar: "Sulawesi Selatan",
+                hadiah: "Rp.16.000.000"
+            },
+            {
+                pertanyaan: "Yang bukan merek mobil buatan eropa adalah?",
+                pilihan: ["Lamborghini", "FORD", "Peugeot", "Lada"],
+                jawabanBenar: "Ford",
+                hadiah: "Rp.32.000.000"
+            },
+            {
+                pertanyaan: "Siapa pencipta lagu indonesia raya?",
+                pilihan: ["Sayut Melik", "W. R. Supratman", "Soekarno", "Koesbini"],
+                jawabanBenar: "W. r. Supratman",
+                hadiah: "Rp.64.000.000"
+            },
+            {
+                pertanyaan: "Kota-kota berikut terletak di jawa tengah kecuali?",
+                pilihan: ["Purwakarta", "Kebumen", "Purworejo", "Kudus"],
+                jawabanBenar: "Purwakarta",
+                hadiah: "Rp.128.000.000"
+            },
+            {
+                pertanyaan: "Planet yang paling dekat dengan matahari adalah?",
+                pilihan: ["Venus", "Mars", "Jupiter", "Merkurius"],
+                jawabanBenar: "Merkurius",
+                hadiah: "Rp.256.000.000"
+            },
+            {
+                pertanyaan: "Negara yang memiliki sebutan negeri matahari terbit adalah?",
+                pilihan: ["Thailand", "Laos", "Jepang", "China"],
+                jawabanBenar: "Jepang",
+                hadiah: "Rp.512.000.000"
+            },
+            {
+                pertanyaan: "Gunung tertinggi di afrika adalah?",
+                pilihan: ["Gunung Everest", "Gunung Denali", "Gunung Speke", "Gunung Kilimanjaro"],
+                jawabanBenar: "Gunung Kilimanjaro",
+                hadiah: "Rp.1.000.000.000"
+            },
+        ];
+
+        let pertanyaanSekarang = 0;
+        let skor = 0;
+
+        function muatPertanyaan() {
+            const sekarang = pertanyaan[pertanyaanSekarang];
+            document.getElementById('pertanyaan').innerHTML = `<div>${sekarang.pertanyaan}</div><div>Hadiah: ${sekarang.hadiah}</div>`;
+            document.getElementById('notifikasi').textContent = "";
+            document.getElementById('hasil').textContent = "";
+
+            const opsiElement = document.getElementById('opsi');
+            opsiElement.innerHTML = "";
+
+            sekarang.pilihan.forEach(pilihan => {
+                const tombol = document.createElement('button');
+                tombol.textContent = pilihan;
+                tombol.onclick = () => submitJawaban(pilihan);
+                opsiElement.appendChild(tombol);
+            });
+        }
+
+        function submitJawaban(dipilih) {
+            const sekarang = pertanyaan[pertanyaanSekarang];
+
+            // Menampilkan notifikasi
+            if (dipilih === sekarang.jawabanBenar) {
+                skor++;
+                alert("Jawaban Benar!");
+            } else {
+                alert("Jawaban Salah! Game Over!");
+                tampilkanHasil();
+                return;
+            }
+
+            pertanyaanSekarang++;
+
+            if (pertanyaanSekarang < pertanyaan.length) {
+                muatPertanyaan();
+            } else {
+                tampilkanHasil();
+            }
+        }
+
+        function tampilkanHasil() {
+            const hasilElement = document.getElementById('hasil');
+            hasilElement.textContent = `Skor kamu ${skor} dari ${pertanyaan.length}!`;
+            document.getElementById('opsi').innerHTML = "";
+            document.getElementById('notifikasi').textContent = "";
+            document.getElementById('reset').style.display = "block";
+        }
+
+        function resetGame() {
+            pertanyaanSekarang = 0;
+            skor = 0;
+            muatPertanyaan();
+            document.getElementById('hasil').textContent = "";
+            document.getElementById('reset').style.display = "none";
+        }
+
+        // Muat pertanyaan pertama saat halaman dimuat
+        muatPertanyaan();
+    </script>
+</body>
+</html>
